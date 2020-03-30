@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+
+<head>
+<meta charset="utf-8">
+	<title>Bands</title>
+<h1 style="color:orangered; text-align: center">Cover Band Setlist</h1>
+
+</head>
+<body style="background-color:darkseagreen;">
+<div style="align-content: center; text-align: center;color: blue;">
+<h2 style = "text-decoration: underline">Serialized</h2>
+	<div class="serialized" id="serialized"></div>
+<h2 style = "text-decoration: underline"> User Friendly</h2>
+	<div class="userfriendly" id="userfriendly"></div>
+<h2 style = "text-decoration: underline"> Filter by Genre </h2>
+<select id="genres" size="6" style="width: 150px">
+	<option value="R&B">R&B</option>
+	<option value="Rock">Rock</option>
+	<option value="Salsa">Salsa</option>
+	<option value="Soul">Soul</option>
+	<option value="Singer-Songwriter">Singer-Songwriter</option>
+	<option value="Alternative">Alternative</option>
+	<option value="Pop">Pop</option>
+</select>
+      <br>
+	      <input type="button" value="Filter" onclick="return matchGenre();">
+	    </form>
+	     <div class="genreName" id="genreName" style="font-size: 20px"></div>
+	     <div class="genre" id="genre"></div>
+ 	</div>
+</div>
+
+	<script language="javascript">
+    	var songs = [
+			{"title": "Cranes in the Sky", "year":2016, "artists":"Solange", "genres":["Pop"]},
+			{"title": "Road Runner", "year":1976, "artists":"Modern Lovers", "genres":["Rock"]},
+        	{"title": "Blue Monday", "year":1986, "artists":"New Order", "genres":["Rock"]},
+        	{"title": "Whip it", "year":1980, "artists":"Devo", "genres":["Alternative"]},
+        	{"title": "Road Runner", "year":1976, "artists":"Modern Lovers", "genres":["Rock"]},
+        	{"title": "No Diggity", "year":1996, "artists":"Blackstreet ft. Dr. Dre", "genres":["R&B", "Soul"]},
+        	{"title": "Pressure to Party", "year":2019, "artists":"Julia Jacklin", "genres":["Singer-Songwriter", "Alternative"]},
+        	{"title": "Ali Baba", "year":1968, "artists":"Louie Ramirez", "genres":["Salsa"]},
+        	{"title": "Me & Mr.Jones", "year":2006, "artists":"Amy Winehouse", "genres":["R&B", "Soul", "Pop"]},
+        	{"title": "I Like Him", "year":2020, "artists":"Princess Nokia", "genres":["Pop", "Alternative"]},
+
+      	];
+
+      	//to print serialized
+		for (var i = 0; i < songs.length; i++) {
+		    document.getElementById("serialized").innerHTML += JSON.stringify(songs[i]) + "<br>";
+		}
+
+		function getSong(i){
+			song = songs[i].title;
+
+			artist = songs[i].artists[0];
+		    for (var j = 1; j < songs[i].artists.length; j++) {
+		    	artist += songs[i].artists[j];
+		    }
+
+			genre = songs[i].genres[0];
+		    for (var j = 1; j < songs[i].genres.length; j++) {
+		    	genre += ", " + songs[i].genres[j];
+		    }
+
+		    year = songs[i].year;
+
+		    output = "<b> " + song + " </b> <br> Artist(s): " + artist + "<br>Genre(s): " + genre + "<br>Year: " + year +"<br><br>";
+
+		    return output;
+		}
+
+			//to print user friendly
+		for (var i = 0; i < songs.length; i++) {
+			song = getSong(i);
+		    document.getElementById("userfriendly").innerHTML += song;		    
+		}
+		function matchGenre() {
+			g = document.getElementById("genres").value;        
+	        document.getElementById("genreName").innerHTML = g + " songs: <br><br>";
+	        for (var i = 0; i < songs.length; i++) {
+	          for (var j = 0; j < songs[i].genres.length; j++) {
+	            if (songs[i].genres[j] == g) {
+	            	document.getElementById("genre").innerHTML += getSong(i);
+	            }
+	          }
+	        }
+	        return true;
+      	}
+     </script>
+</body>
